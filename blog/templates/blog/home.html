@@ -1,14 +1,23 @@
 {% extends "blog/base.html" %}
 {% block content%}
+    <div>
+        <a class="btn btn-outline-primary" href="{% url 'post-create' %}">New post</a>
+    </div>
     {% for post in posts %}
         <article class="media content-section">
+            
             <div class="media-body">
             <div class="article-metadata">
+                <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}" alt="No Display Image">
                 <a class="mr-2" href="{% url 'profile' %}">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted|date:"d M, Y"}}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+            </div>
+            <div>
+                <a class="btn btn-outline-secondary" href="{% url 'post-update' post.id %}">Update</a>
+                <a class="btn btn-outline-danger" href="{% url 'post-delete' post.id %}">Delete</a>
             </div>
         </article>
     {% endfor %}
